@@ -1,0 +1,29 @@
+name: Test pwncat
+
+on:
+  workflow_dispatch:
+    inputs:
+      runs_on:
+        description: Type of machine to run the job on
+        required: true
+        type: choice
+        default: ubuntu-latest
+        options:
+          - tempest-k8s
+          - ubuntu-latest
+
+jobs:
+  test:
+    runs-on: ${{inputs.runs_on}}
+    name: Test pwncat
+
+    # Add "id-token" with the intended permissions.
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run
+        run: |
+          date
